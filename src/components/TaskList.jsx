@@ -1,5 +1,5 @@
-import Task from "./Task";
-import Footer from "./Footer";
+import Task from "./task";
+import Footer from "./footer";
 import NewTaskForm, { Header } from "./newTaskForm";
 
 function TaskList() {
