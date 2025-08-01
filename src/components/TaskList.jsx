@@ -1,19 +1,15 @@
 import Task from "./task";
-import Footer from "./footer";
-import NewTaskForm, { Header } from "./newTaskForm";
 
-function TaskList() {
+function TaskList({ tasks, date }) {
   return (
     <div>
-      <Header />
-      <NewTaskForm />
       <ul className="todo-list">
-        <Task className="completed" />
-        <Task className="editing" />
-        <Task />
+        {tasks.map((task) => (
+          <Task key={task.id} text={task.text} state={task.state} date={date} />
+        ))}
       </ul>
-      <Footer />
     </div>
   );
 }
+
 export default TaskList;
