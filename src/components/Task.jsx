@@ -4,15 +4,7 @@ function Task({ text, state, date }) {
   const [editText, setEditText] = useState(text);
 
   return (
-    <li
-      className={
-        state === "completed"
-          ? "completed"
-          : state === "editing"
-          ? "editing"
-          : ""
-      }
-    >
+    <li className={state || ""}>
       <div className="view">
         <input
           className="toggle"
