@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function Task({ id, text, state, date, setTasks, tasks }) {
   const [editText, setEditText] = useState(text);
-  const [isEditing, setIsEditing] = useState(state === "editing");
+  const isEditing = state === "editing";
 
   const toggleCompleted = () => {
     const updated = tasks.map((task) =>
@@ -26,12 +26,11 @@ function Task({ id, text, state, date, setTasks, tasks }) {
         task.id === id ? { ...task, text: editText, state: "active" } : task
       );
       setTasks(updated);
-      setIsEditing(false);
     }
   };
 
   const startEditing = () => {
-    setIsEditing(true);
+    console.log("Edit clicked:", id);
     const updated = tasks.map((task) =>
       task.id === id ? { ...task, state: "editing" } : task
     );

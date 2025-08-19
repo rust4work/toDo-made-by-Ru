@@ -11,8 +11,8 @@ function NewTaskForm({ setTasks }) {
         state: "active",
       };
 
-      setTasks((prevTasks) => [...prevTasks, newTask]);
-      setText(""); // очистить поле ввода
+      setTasks((prevTasks) => [newTask, ...prevTasks]);
+      setText("");
     }
   };
 

@@ -1,12 +1,12 @@
-import TasksFilter from "./TasksFilter";
+import TasksFilter from "./tasksFilter";
 
-function Footer({ activeCount = 0, onClearCompleted = () => {} }) {
+function Footer({ activeCount = 0, onClearCompleted, filter, setFilter }) {
   return (
     <footer className="footer">
       <span className="todo-count">
         {activeCount} item{activeCount !== 1 ? "s" : ""} left
       </span>
-      <TasksFilter />
+      <TasksFilter filter={filter} setFilter={setFilter} />
       <button className="clear-completed" onClick={onClearCompleted}>
         Clear completed
       </button>
