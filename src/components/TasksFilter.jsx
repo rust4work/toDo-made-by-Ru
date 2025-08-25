@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function TasksFilter({ filter, setFilter }) {
   return (
     <ul className="filters">
@@ -28,5 +30,15 @@ function TasksFilter({ filter, setFilter }) {
     </ul>
   );
 }
+
+TasksFilter.propTypes = {
+  filter: PropTypes.string,
+  setFilter: PropTypes.func,
+};
+
+TasksFilter.defaultProps = {
+  filter: "all",
+  setFilter: () => {},
+};
 
 export default TasksFilter;

@@ -1,37 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TaskList from "./components/TaskList";
 import Footer from "./components/Footer";
 import NewTaskForm, { Header } from "./components/NewTaskForm";
-import { format } from "date-fns";
 import "./App.css";
+import useTasks from "./components/useTasks";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const { tasks, setTasks, error, loading } = useTasks();
 
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        const mappedTasks = data.slice(0, 10).map((todo) => ({
-          id: todo.id,
-          text: todo.title,
-          state: todo.completed ? "completed" : "active",
-        }));
-        setTasks(mappedTasks);
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const currentDate = format(new Date(), "dd.MM.yyyy HH:mm");
   const activeCount = tasks.filter((task) => task.state === "active").length;
 
   const filteredTasks = tasks.filter((task) => {
@@ -55,7 +32,7 @@ function App() {
     <>
       <Header />
       <NewTaskForm setTasks={setTasks} />
-      <TaskList tasks={filteredTasks} setTasks={setTasks} date={currentDate} />
+      <TaskList tasks={filteredTasks} setTasks={setTasks} />
       <Footer
         activeCount={activeCount}
         filter={filter}

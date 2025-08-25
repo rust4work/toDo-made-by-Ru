@@ -1,6 +1,7 @@
+import PropTypes from "prop-types";
 import TasksFilter from "./tasksFilter";
 
-function Footer({ activeCount = 0, onClearCompleted, filter, setFilter }) {
+function Footer({ activeCount, onClearCompleted, filter, setFilter }) {
   return (
     <footer className="footer">
       <span className="todo-count">
@@ -13,5 +14,19 @@ function Footer({ activeCount = 0, onClearCompleted, filter, setFilter }) {
     </footer>
   );
 }
+
+Footer.propTypes = {
+  activeCount: PropTypes.number,
+  onClearCompleted: PropTypes.func,
+  filter: PropTypes.string,
+  setFilter: PropTypes.func,
+};
+
+Footer.defaultProps = {
+  activeCount: 0,
+  onClearCompleted: () => {},
+  filter: "all", // по умолчанию показываем все задачи
+  setFilter: () => {},
+};
 
 export default Footer;

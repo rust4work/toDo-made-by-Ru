@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 function NewTaskForm({ setTasks }) {
   const [text, setText] = useState("");
@@ -9,6 +10,7 @@ function NewTaskForm({ setTasks }) {
         id: Date.now(),
         text: text.trim(),
         state: "active",
+        createdAt: new Date(),
       };
 
       setTasks((prevTasks) => [newTask, ...prevTasks]);
@@ -27,6 +29,14 @@ function NewTaskForm({ setTasks }) {
     />
   );
 }
+
+NewTaskForm.propTypes = {
+  setTasks: PropTypes.func.isRequired,
+};
+
+NewTaskForm.defaultProps = {
+  setTasks: () => {},
+};
 
 function Header() {
   return <h1>ToDo made by Ru</h1>;

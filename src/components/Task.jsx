@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { formatDistanceToNow } from "date-fns";
 
-function Task({ id, text, state, date, setTasks, tasks }) {
+function Task({ id, text, state, createdAt, setTasks, tasks }) {
   const [editText, setEditText] = useState(text);
   const isEditing = state === "editing";
 
@@ -30,7 +32,6 @@ function Task({ id, text, state, date, setTasks, tasks }) {
   };
 
   const startEditing = () => {
-    console.log("Edit clicked:", id);
     const updated = tasks.map((task) =>
       task.id === id ? { ...task, state: "editing" } : task
     );
@@ -48,7 +49,10 @@ function Task({ id, text, state, date, setTasks, tasks }) {
         />
         <label>
           <span className="description">{text}</span>
-          <span className="created">created {date}</span>
+          <span className="created">
+            created{" "}
+            {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
+          </span>
         </label>
         <button className="icon icon-edit" onClick={startEditing}></button>
         <button className="icon icon-destroy" onClick={deleteTask}></button>
@@ -67,5 +71,29 @@ function Task({ id, text, state, date, setTasks, tasks }) {
     </li>
   );
 }
+
+Task.propTypes = {
+  id: PropTypes.number.isRequired,
+  text: PropTypes.string.isRequired,
+  state: PropTypes.oneOf(["active", "completed", "editing"]).isRequired,
+  createdAt: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)])
+    .isRequired,
+  setTasks: PropTypes.func.isRequired,
+  tasks: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      text: PropTypes.string.isRequired,
+      state: PropTypes.string.isRequired,
+      createdAt: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(Date),
+      ]).isRequired,
+    })
+  ).isRequired,
+};
+
+Task.defaultProps = {
+  state: "active",
+};
 
 export default Task;
