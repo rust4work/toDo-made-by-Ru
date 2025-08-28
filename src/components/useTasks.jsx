@@ -14,7 +14,7 @@ function useTasks() {
         return response.json();
       })
       .then((data) => {
-        const mappedTasks = data.slice(0, 20).map((todo) => ({
+        const mappedTasks = data.slice(0, 10).map((todo) => ({
           id: todo.id,
           text: todo.title,
           state: todo.completed ? "completed" : "active",

@@ -2,40 +2,43 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 
-function Task({ id, text, state, createdAt, setTasks, tasks }) {
+function Task({ id, text, state, createdAt, setTasks }) {
   const [editText, setEditText] = useState(text);
   const isEditing = state === "editing";
 
   const toggleCompleted = () => {
-    const updated = tasks.map((task) =>
-      task.id === id
-        ? {
-            ...task,
-            state: task.state === "completed" ? "active" : "completed",
-          }
-        : task
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id
+          ? {
+              ...task,
+              state: task.state === "completed" ? "active" : "completed",
+            }
+          : task
+      )
     );
-    setTasks(updated);
   };
 
   const deleteTask = () => {
-    setTasks(tasks.filter((task) => task.id !== id));
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
   };
 
   const saveEdit = (e) => {
     if (e.key === "Enter") {
-      const updated = tasks.map((task) =>
-        task.id === id ? { ...task, text: editText, state: "active" } : task
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id ? { ...task, text: editText, state: "active" } : task
+        )
       );
-      setTasks(updated);
     }
   };
 
   const startEditing = () => {
-    const updated = tasks.map((task) =>
-      task.id === id ? { ...task, state: "editing" } : task
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === id ? { ...task, state: "editing" } : task
+      )
     );
-    setTasks(updated);
   };
 
   return (
